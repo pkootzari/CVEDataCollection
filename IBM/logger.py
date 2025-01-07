@@ -6,9 +6,14 @@ def generate_logger(logger_name, log_file_name="app.log"):
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.DEBUG)
 
+    # Progress file handler
+    progress_handler_file_name = log_file_name.split(".")[0] + "_progress" + ".log"
+    progress_file_handler = logging.FileHandler(progress_handler_file_name)
+    progress_file_handler.setLevel(logging.DEBUG)
+
     # File handler
     file_handler = logging.FileHandler(log_file_name)
-    file_handler.setLevel(logging.DEBUG)
+    file_handler.setLevel(logging.INFO)
 
     error_handler_file_name = log_file_name.split(".")[0] + "_error" + ".log"
     error_handler = logging.FileHandler(error_handler_file_name)
@@ -20,11 +25,13 @@ def generate_logger(logger_name, log_file_name="app.log"):
 
     # Formatter
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    progress_file_handler.setFormatter(formatter)
     file_handler.setFormatter(formatter)
     error_handler.setFormatter(formatter)
     # console_handler.setFormatter(formatter)
 
     # Add handlers to the logger
+    logger.addHandler(progress_file_handler)
     logger.addHandler(file_handler)
     logger.addHandler(error_handler)
     # logger.addHandler(console_handler)

@@ -53,16 +53,14 @@ def generate_url_queue(urls, output_directory):
 def collect_info(url_queue, output_dir, progress_bar):
     # Set up Chrome options
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")  # Run in headless mode (no browser UI)
-    # chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--headless")  # Run in headless mode (no browser UI)
+    chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
     # Set up Chrome driver
     service = Service("chromedriver-linux64/chromedriver")  # Replace with the path to your ChromeDriver
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
-    input("Please login to IBM")
-
-    working = True
+    # input("Please login to IBM")
 
     # for cve_id, url in list(urls.items())[start_index:end_index]:
     while not url_queue.empty():
@@ -73,8 +71,8 @@ def collect_info(url_queue, output_dir, progress_bar):
             if not has_description:
                 logger.error(f"HTML file for {cve_id} doesn't have description")
             progress_bar.update(1)
+            logger.debug(f"{url_queue.qsize()} CVEs remaining!")
         except RateLimitReached as e:
-            working = False
             logger.error("Closed the Driver!")
             print("Closed the Driver!")
             driver.quit()
@@ -161,7 +159,7 @@ def main():
     """Main function to demonstrate the usage of save_html."""
 
     # years = ["2024", "2023", "2022", "2021", "2020"]
-    years = ["2024"]
+    years = ["2023"]
     # remeber to fix the url array so that it starts from the beggining
 
     for year in years:
