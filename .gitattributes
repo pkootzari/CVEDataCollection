@@ -1,1 +1,4 @@
 nvdcve-1.1-2023.json filter=lfs diff=lfs merge=lfs -text
+nvdcve-1.1-2021.json filter=lfs diff=lfs merge=lfs -text
+nvdcve-1.1-2020.json filter=lfs diff=lfs merge=lfs -text
+nvdcve-1.1-2022.json filter=lfs diff=lfs merge=lfs -text
