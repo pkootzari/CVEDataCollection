@@ -12,6 +12,7 @@ import requests
 from tqdm import tqdm
 import threading
 import queue
+import gc
 
 
 THREATS_NUMBER = 2
@@ -71,12 +72,13 @@ def collect_info(url_queue, output_dir, progress_bar):
             if not has_description:
                 logger.error(f"HTML file for {cve_id} doesn't have description")
             progress_bar.update(1)
-            logger.debug(f"{url_queue.qsize()} CVEs remaining!")
+            # logger.debug(f"{url_queue.qsize()} CVEs remaining!")
         except RateLimitReached as e:
             logger.error("Closed the Driver!")
             print("Closed the Driver!")
             driver.quit()
             break
+        gc.collect()
         
 
 
